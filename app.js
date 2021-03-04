@@ -12,24 +12,44 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thurseday', 'Friday',
 
 const showTime = () => {
     const date = new Date();
-    if (date.getHours() == 0) {
+    const getHr = date.getHours();
+    const getMin = date.getMinutes();
+    const getSec = date.getSeconds();
+    const getDt = date.getDate();
+    const getMn = date.getMonth();
+    const getYr = date.getFullYear();
+
+    if (getHr == 0) {
         ampm.textContent = 'am';
-        hr.textContent = 12 + date.getHours();
-    } else if (date.getHours() > 0 || date.getHours < 12) {
+        hr.textContent = 12 + getHr;
+    } else if (getHr > 0 && getHr < 12) {
         ampm.textContent = 'am';
-        hr.textContent = date.getHours();
-    } else if (date.getHours >= 12) {
+        if (getHr < 10) {
+            hr.textContent = '0' + 12;
+        } else {
+            hr.textContent = getHr;
+        }
+
+    } else if (getHr >= 12) {
         ampm.textContent = 'pm';
-        hr.textContent = date.getHours() - 12;
+        if (getHr < 20) {
+            hr.textContent = '0' + (getHr - 12);
+        } else {
+            hr.textContent = getHr - 12;
+        }
     }
 
-    hr.textContent = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-    min.textContent = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-    sec.textContent = date.getSeconds() < 10 ? '0' + date.getSeconds() : sec.textContent = date.getSeconds();
+    setTime = (query, timeQuery) => {
+        query.textContent = timeQuery < 10 ? '0' + timeQuery : timeQuery;
+    }
 
-    dayDate.textContent = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-    month.textContent = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth();
-    year.textContent = date.getFullYear() < 10 ? '0' + date.getFullYear() : date.getFullYear();
+    setTime(min, getMin);
+    setTime(sec, getSec);
+    setTime(dayDate, getDt);
+    setTime(month, getMn);
+    setTime(year, getYr);
+
+
     weekDay.textContent = days[date.getDay()];
 
 }
